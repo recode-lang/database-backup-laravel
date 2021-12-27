@@ -1,0 +1,24 @@
+{
+    "name": "recode-lang/database-backup-laravel",
+    "description": "Easy command to back-up your database and send it to your S3 bucket",
+    "license": "MIT",
+    "autoload": {
+        "psr-4": {
+            "RecodeLang\\DatabaseBackupLaravel\\": "src/"
+        }
+    },
+    "authors": [
+        {
+            "name": "Jordi de Kleijn",
+            "email": "jordi@hetmedialab.nl"
+        }
+    ],
+    "require": {},
+    "extra": {
+        "laravel": {
+            "providers": [
+                "RecodeLang\\DatabaseBackupLaravel\\DatabaseBackupServiceProvider"
+            ]
+        }
+    }
+}
