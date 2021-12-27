@@ -36,7 +36,7 @@ class DatabaseBackup
     private function createBackup()
     {
         // Exec mysqldump command with username, database name and password, host and path
-        $command = "mysqldump --no-tablespaces -u " . env('DB_USERNAME') . " -p" . env('DB_PASSWORD') . " -h " . env('DB_HOST') . " " . env('DB_DATABASE') . " > " . $this->path . " 2>/dev/null";
+        $command = "mysqldump --no-tablespaces -u " . config('database.connections.mysql.username') . " -p" . config('database.connections.mysql.password') . " -h " . config('database.connections.mysql.host') . " " . config('database.connections.mysql.database') . " > " . $this->path . " 2>/dev/null";
 
         // Execute the command
         exec($command);
@@ -51,7 +51,7 @@ class DatabaseBackup
     public function deleteOldFiles()
     {
         // Foreach all the files in the storage disk
-        foreach ($this->storage->files(env('APP_NAME') . '/') as $file)
+        foreach ($this->storage->files(config('app.name') . '/') as $file)
         {
             // Delete the file if it is older than 1 month
             if (now()->parse($this->storage->lastModified($file)) < now()->subMonth())
@@ -93,7 +93,7 @@ class DatabaseBackup
         // Check if the content isn't empty
         if(!empty($content)){
             // Send the backup file to the disk and return true
-            $this->storage->put(env('APP_NAME') . '/' . $this->filename, $content);
+            $this->storage->put(config('app.name') . '/' . $this->filename, $content);
             return true;
         }
         // If the content is empty, return false
