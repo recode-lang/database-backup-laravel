@@ -82,7 +82,7 @@ class DatabaseBackup
      * sendToDisk
      * Make the backup, check if the content isn't empty, then send it to the disk
      *
-     * @return void
+     * @return boolean
      */
     public function makeBackupAndSendToDisk()
     {
