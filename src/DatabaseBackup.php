@@ -30,7 +30,7 @@ class DatabaseBackup
         exec($command, $output, $returnValue);
 
         // check if output contains string
-        if (strpos(implode(" ", $output), '[Warning]') !== true) {
+        if (strpos(implode(" ", $output), '[Warning]') == false) {
             return false;
         }
         return true;
