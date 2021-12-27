@@ -34,7 +34,7 @@ class DatabaseBackup
     private function createBackup()
     {
         // Exec mysqldump command with username, database name and password, host and path
-        $command = "mysqldump --no-tablespaces -u " . env('DB_USERNAME') . " -p" . env('DB_PASSWORD') . " -h " . env('DB_HOST') . " " . env('DB_DATABASE') . " > " . $this->path . " 2>&1";
+        $command = "mysqldump --no-tablespaces -u " . env('DB_USERNAME') . " -p" . env('DB_PASSWORD') . " -h " . env('DB_HOST') . " " . env('DB_DATABASE') . " > " . $this->path . " 2>/dev/null";
 
         // Execute the command
         exec($command);
