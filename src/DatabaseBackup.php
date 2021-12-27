@@ -25,13 +25,7 @@ class DatabaseBackup
         $command = "mysqldump --no-tablespaces -u " . env('DB_USERNAME') . " -p" . env('DB_PASSWORD') . " -h " . env('DB_HOST') . " " . env('DB_DATABASE') . " > " . $this->path;
 
         // Execute the command
-        shell_exec($command);
-
-        // check if output contains string
-        if (strpos(shell_exec($command), 'insecure') !== false) {
-            return false;
-        }
-        return true;
+        exec($command);
     }
 
     // Deletes old backups
