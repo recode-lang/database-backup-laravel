@@ -25,12 +25,10 @@ class DatabaseBackup
         $command = "mysqldump --no-tablespaces -u " . env('DB_USERNAME') . " -p" . env('DB_PASSWORD') . " -h " . env('DB_HOST') . " " . env('DB_DATABASE') . " > " . $this->path;
 
         // Execute the command
-        $output = null;
-        $returnValue = null;
-        exec($command, $output, $returnValue);
+        shell_exec($command);
 
         // check if output contains string
-        if (strpos(implode(" ", $output), '[Warning]') == false) {
+        if (strpos(shell_exec($command), 'insecure') !== false) {
             return false;
         }
         return true;
