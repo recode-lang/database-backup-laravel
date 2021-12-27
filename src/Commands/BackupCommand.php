@@ -44,10 +44,11 @@ class BackupCommand extends Command
         $this->info('Deleting old backups...');
         $this->backup->deleteOldFiles();
         $this->info('Done, creating new backup...');
-        $this->backup->createBackup();
-        $this->info('New backup created, sending to disk...');
-        $this->backup->sendToDisk();
-        $this->info('Backup created and stored successfully');
+        if($this->backup->makeBackupAndSendToDisk()) {
+            $this->info('Backup created and sent to disk.');
+        } else {
+            $this->error('Backup failed.');
+        }
     }
 
 

@@ -31,10 +31,10 @@ class DatabaseBackup
      *
      * @return void
      */
-    public function createBackup()
+    private function createBackup()
     {
         // Exec mysqldump command with username, database name and password, host and path
-        $command = "mysqldump --no-tablespaces -u " . env('DB_USERNAME') . " -p" . env('DB_PASSWORD') . " -h " . env('DB_HOST') . " " . env('DB_DATABASE') . " > " . $this->path;
+        $command = "mysqldump --no-tablespaces -u " . env('DB_USERNAME') . " -p" . env('DB_PASSWORD') . " -h " . env('DB_HOST') . " " . env('DB_DATABASE') . " > " . $this->path . " 2>&1";
 
         // Execute the command
         exec($command);
@@ -80,15 +80,19 @@ class DatabaseBackup
 
     /**
      * sendToDisk
-     * Send to the S3 bucket 
+     * Make the backup, check if the content isn't empty, then send it to the disk
      *
      * @return void
      */
-    public function sendToDisk()
+    public function makeBackupAndSendToDisk()
     {
-        $this
-            ->storage
-            ->put(env('APP_NAME') . '/' . $this->filename, $this->getCreatedBackupAndRemove());
+        $this->createBackup();
+        $content = $this->getCreatedBackupAndRemove();
+        if(!empty($content)){
+            $this->storage->put(env('APP_NAME') . '/' . $this->filename, $content);
+            return true;
+        }
+        return false;
     }
 
 }
