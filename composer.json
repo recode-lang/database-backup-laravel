@@ -1,7 +1,7 @@
 {
   "name": "recode-lang/database-backup-laravel",
   "description": "Easy command to back-up your database and for example send it to your S3 bucket.",
-  "version": "v0.2.0-alpha",
+  "version": "1.0.0",
   "license": "MIT",
   "autoload": {
     "psr-4": {
