@@ -19,9 +19,11 @@ class DatabaseBackup
      */
     public function __construct()
     {
+        // Get the storage disk from the config file
         $this->storage = Storage::disk('database_backup');
-        $this->filename = now()
-            ->format('Y-m-d_H-i-s') . '.sql';
+        // Create the filename
+        $this->filename = now()->format('Y-m-d_H-i-s') . '.sql';
+        // Create the path based on the filename
         $this->path = storage_path($this->filename);
     }
 
@@ -48,19 +50,14 @@ class DatabaseBackup
      */
     public function deleteOldFiles()
     {
-        // Foreach all the files
-        foreach ($this
-            ->storage
-            ->files(env('APP_NAME') . '/') as $file)
+        // Foreach all the files in the storage disk
+        foreach ($this->storage->files(env('APP_NAME') . '/') as $file)
         {
             // Delete the file if it is older than 1 month
-            if (now()->parse($this
-                ->storage
-                ->lastModified($file)) < now()->subMonth())
+            if (now()->parse($this->storage->lastModified($file)) < now()->subMonth())
             {
-                $this
-                    ->storage
-                    ->delete($file);
+                // Delete the file
+                $this->storage->delete($file);
             }
         }
     }
@@ -73,8 +70,11 @@ class DatabaseBackup
      */
     private function getCreatedBackupAndRemove()
     {
+        // Get the backup file
         $contents = file_get_contents($this->path);
+        // Remove the backup file
         unlink($this->path);
+        // Return the backup file's contents
         return $contents;
     }
 
@@ -86,12 +86,17 @@ class DatabaseBackup
      */
     public function makeBackupAndSendToDisk()
     {
+        // Create the backup
         $this->createBackup();
+        // Get the backup file's contents
         $content = $this->getCreatedBackupAndRemove();
+        // Check if the content isn't empty
         if(!empty($content)){
+            // Send the backup file to the disk and return true
             $this->storage->put(env('APP_NAME') . '/' . $this->filename, $content);
             return true;
         }
+        // If the content is empty, return false
         return false;
     }
 
