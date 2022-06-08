@@ -1,3 +1,4 @@
+[![Updating composer dependencies](https://github.com/recode-lang/database-backup-laravel/actions/workflows/main.yml/badge.svg)](https://github.com/recode-lang/database-backup-laravel/actions/workflows/main.yml)
 # database-backup-laravel
 
 An easy way to make backups of MYSQL databases using Laravel and send them to storage (S3 for example).
