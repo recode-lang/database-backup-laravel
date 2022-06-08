@@ -14,7 +14,7 @@ An easy way to make backups of MYSQL databases using Laravel and send them to st
 Simply just install using composer
 
 ```
-composer require laravel/database-backup
+composer require recode-lang/database-backup-laravel
 ```
 
 After installation go to the config file of filesystems and add 'database_backup', in here you can customise and pick your own drivers. I prefer using it with S3.
