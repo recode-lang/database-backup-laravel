@@ -1,4 +1,5 @@
 [![Updating composer dependencies](https://github.com/recode-lang/database-backup-laravel/actions/workflows/main.yml/badge.svg)](https://github.com/recode-lang/database-backup-laravel/actions/workflows/main.yml)
+
 # database-backup-laravel
 
 An easy way to make backups of MYSQL databases using Laravel and send them to storage (S3 for example).
@@ -17,27 +18,12 @@ Simply just install using composer
 composer require recode-lang/database-backup-laravel
 ```
 
-After installation go to the config file of filesystems and add 'database_backup', in here you can customise and pick your own drivers. I prefer using it with S3.
-
-```php
-'database_backup' => [
-            'driver' => 's3',
-            'key' => env('AWS_ACCESS_KEY_ID'),
-            'secret' => env('AWS_SECRET_ACCESS_KEY'),
-            'region' => env('AWS_DEFAULT_REGION'),
-            'bucket' => env('AWS_BUCKET'),
-            'url' => env('AWS_URL'),
-            'endpoint' => env('AWS_ENDPOINT'),
-            'use_path_style_endpoint' => env('AWS_USE_PATH_STYLE_ENDPOINT', false),
-],
-```
-
 ## Usage
 
 Now you can use it either directly from the command line
 
 ```bash
-php artisan db:backup
+php artisan db:backup s3
 ```
 
 Or add it in the scheduler
@@ -51,7 +37,7 @@ Or add it in the scheduler
      */
     protected function schedule(Schedule $schedule)
     {
-        $schedule->command('db:backup')->everyDay();
+        $schedule->command('db:backup s3')->everyDay();
     }
 ```
 

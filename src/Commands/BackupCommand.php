@@ -12,14 +12,14 @@ class BackupCommand extends Command
      *
      * @var string
      */
-    protected $signature = 'db:backup';
+    protected $signature = 'db:backup {disk?}';
 
     /**
      * The console command description.
      *
      * @var string
      */
-    protected $description = 'Makes a backup of the currently connected database and sends it to the specified disk in the config file';
+    protected $description = 'Makes a backup of the currently connected database and sends it to the specified disk';
 
     private $backup;
 
@@ -31,7 +31,6 @@ class BackupCommand extends Command
     public function __construct()
     {
         parent::__construct();
-        $this->backup = new DatabaseBackup();
     }
 
     /**
@@ -41,6 +40,7 @@ class BackupCommand extends Command
      */
     public function handle()
     {
+        $this->backup = new DatabaseBackup($this->argument('disk') ?? 's3');
         $this->info('Deleting old backups...');
         $this->backup->deleteOldFiles();
         $this->info('Done, creating new backup...');

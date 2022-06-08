@@ -17,10 +17,10 @@ class DatabaseBackup
      *
      * @return void
      */
-    public function __construct()
+    public function __construct($disk)
     {
         // Get the storage disk from the config file
-        $this->storage = Storage::disk('database_backup');
+        $this->storage = Storage::disk($disk);
         // Create the filename
         $this->filename = now()->format('Y-m-d_H-i-s') . '.sql';
         // Create the path based on the filename
