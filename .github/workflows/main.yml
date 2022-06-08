@@ -1,0 +1,24 @@
+name: Updating composer dependencies
+
+on:
+  push:
+    branches: [ "main" ]
+  schedule:
+    - cron: '0 0 * * *' #UTC
+
+
+jobs:
+  composer_update_job:
+    runs-on: ubuntu-latest
+    name: composer update
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v2
+      - name: Update composer dependencies
+        uses: pxgamer/composer-action@master
+        with:
+          command: update --ignore-platform-reqs
+      - name: Commit changes
+        uses: stefanzweifel/git-auto-commit-action@v4
+        with:
+          commit_message: Updates dependencies
